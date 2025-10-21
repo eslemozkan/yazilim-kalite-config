@@ -1,0 +1,38 @@
+# PLACEHOLDER - Literature Review Template
+
+Bu dosya, HTTP Security Headers Test projesi için literature review şablonudur.
+
+## Şablon İçeriği
+
+### Sayfa 1: Kaynak Listesi
+- Yazar
+- Yayın Yılı
+- Başlık
+- Dergi/Konferans
+- DOI
+- URL
+- Özet
+- İlgili Konular
+
+### Sayfa 2: Kategoriler
+- HTTP Security Headers
+- Web Application Security
+- OWASP Guidelines
+- Security Testing
+- Vulnerability Assessment
+
+### Sayfa 3: Analiz
+- Kaynak Analizi
+- Trend Analizi
+- Gap Analizi
+- Öneriler
+
+## Kullanım
+
+Bu şablon, literature review sürecinde kullanılacaktır.
+
+## Notlar
+
+- Akademik standartlarda hazırlanacaktır
+- Güvenlik odaklı kaynaklar içerecektir
+- Güncel kaynaklar tercih edilecektir

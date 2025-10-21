@@ -1,0 +1,144 @@
+name: HTTP Security Headers Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM UTC
+
+jobs:
+  header-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Create data directories
+      run: |
+        mkdir -p data/raw_reports
+        mkdir -p data/processed
+        
+    - name: Run header checks (simulation mode)
+      run: |
+        # Simulate header checks since containers won't be available in CI
+        echo "Running header checks in simulation mode..."
+        python scripts/header_check.py --targets all --outdir data/raw_reports
+        
+    - name: Generate comparison report
+      run: |
+        python scripts/generate_comparison_xlsx.py --input data/raw_reports --output data/processed
+        
+    - name: Parse and analyze reports
+      run: |
+        python scripts/parse_reports.py --input data/raw_reports --output data/processed
+        
+    - name: Upload raw reports as artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: security-headers-reports
+        path: data/raw_reports/
+        retention-days: 30
+        
+    - name: Upload processed reports as artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: security-headers-processed
+        path: data/processed/
+        retention-days: 30
+        
+    - name: Comment on PR with results
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const path = require('path');
+          
+          // Check if processed reports exist
+          const processedDir = 'data/processed';
+          if (fs.existsSync(processedDir)) {
+            const files = fs.readdirSync(processedDir);
+            const reportFiles = files.filter(f => f.endsWith('.xlsx') || f.endsWith('.txt'));
+            
+            let comment = '## 🔒 Security Headers Test Results\n\n';
+            comment += '### Generated Reports:\n';
+            
+            reportFiles.forEach(file => {
+              comment += `- \`${file}\`\n`;
+            });
+            
+            comment += '\n### Next Steps:\n';
+            comment += '1. Download artifacts to view detailed reports\n';
+            comment += '2. Review security findings and recommendations\n';
+            comment += '3. Address high and medium severity issues\n';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+          }
+
+  # Self-hosted runner job (optional)
+  header-check-self-hosted:
+    runs-on: self-hosted
+    if: github.event_name == 'workflow_dispatch'  # Manual trigger only
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Start Docker containers
+      run: |
+        docker compose up -d
+        sleep 30  # Wait for containers to be ready
+        
+    - name: Run header checks
+      run: |
+        python scripts/header_check.py --targets all
+        
+    - name: Generate reports
+      run: |
+        python scripts/generate_comparison_xlsx.py
+        python scripts/parse_reports.py --input data/raw_reports
+        
+    - name: Stop Docker containers
+      if: always()
+      run: |
+        docker compose down
+        
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: security-headers-self-hosted
+        path: |
+          data/raw_reports/
+          data/processed/
+        retention-days: 30

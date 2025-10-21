@@ -1,0 +1,104 @@
+version: '3.8'
+
+services:
+  dvwa:
+    image: vulnerables/web-dvwa
+    container_name: dvwa
+    ports:
+      - "8081:80"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=dvwa
+      - MYSQL_USER=dvwa
+      - MYSQL_PASSWORD=p@ssw0rd
+    volumes:
+      - dvwa_data:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - security-test-network
+
+  bwapp:
+    image: raesene/bwapp
+    container_name: bwapp
+    ports:
+      - "8082:80"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=bwapp
+      - MYSQL_USER=bwapp
+      - MYSQL_PASSWORD=bug
+    volumes:
+      - bwapp_data:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - security-test-network
+
+  xvwa:
+    image: tuxotron/xvwa
+    container_name: xvwa
+    ports:
+      - "8083:80"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=xvwa
+    volumes:
+      - xvwa_data:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - security-test-network
+
+  juice-shop:
+    image: bkimminich/juice-shop
+    container_name: juice-shop
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - security-test-network
+
+  opencart:
+    image: bitnami/opencart
+    container_name: opencart
+    ports:
+      - "8084:8080"
+    environment:
+      - OPENCART_DATABASE_HOST=mysql
+      - OPENCART_DATABASE_PORT_NUMBER=3306
+      - OPENCART_DATABASE_NAME=opencart
+      - OPENCART_DATABASE_USER=opencart
+      - OPENCART_DATABASE_PASSWORD=opencart123
+      - MYSQL_ROOT_PASSWORD=rootpassword
+    volumes:
+      - opencart_data:/bitnami/opencart
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    networks:
+      - security-test-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=opencart
+      - MYSQL_USER=opencart
+      - MYSQL_PASSWORD=opencart123
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - security-test-network
+
+volumes:
+  dvwa_data:
+  bwapp_data:
+  xvwa_data:
+  opencart_data:
+  mysql_data:
+
+networks:
+  security-test-network:
+    driver: bridge

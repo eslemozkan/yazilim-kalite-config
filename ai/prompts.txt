@@ -1,0 +1,251 @@
+# AI/LLM Prompts for Security Headers Analysis
+# Yazılım Kalite ve Güvence - Konfigürasyon/Güvenlik Başlıkları Testi
+
+## Prompt 1: JSON Rapor Özetleme
+```
+Sen bir güvenlik uzmanısın. Aşağıdaki HTTP güvenlik başlıkları test sonuçlarını analiz et ve özet çıkar.
+
+JSON Verisi:
+{JSON_DATA}
+
+Görevler:
+1. Top 5 kritik güvenlik bulgusunu sırala
+2. Her bulgu için etki analizi yap
+3. Öneriler sun
+4. Sonuçları JSON formatında döndür
+
+Beklenen JSON Çıktı:
+{
+  "summary": {
+    "total_findings": number,
+    "critical_issues": number,
+    "high_risk": number,
+    "medium_risk": number,
+    "low_risk": number
+  },
+  "top_critical_findings": [
+    {
+      "header": "string",
+      "issue": "string",
+      "severity": "High/Medium/Low",
+      "impact": "string",
+      "recommendation": "string"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "High/Medium/Low",
+      "action": "string",
+      "description": "string"
+    }
+  ]
+}
+```
+
+## Prompt 2: Karşılaştırma Analizi
+```
+Sen bir güvenlik analisti olarak, aşağıdaki hedefler arasında güvenlik başlıkları karşılaştırması yap.
+
+Hedefler: DVWA, bWAPP, XVWA, Juice Shop, OpenCart
+
+Görevler:
+1. Her hedef için güvenlik skorunu hesapla
+2. En güvenli ve en zayıf hedefleri belirle
+3. Ortak güvenlik açıklarını tespit et
+4. Genel güvenlik önerilerini sun
+
+Beklenen Çıktı:
+- Güvenlik skorları tablosu
+- Karşılaştırma analizi
+- Öneriler listesi
+```
+
+## Prompt 3: Akademik Rapor Şablonu
+```
+Sen bir akademik araştırmacısın. Aşağıdaki güvenlik test sonuçlarını kullanarak akademik rapor şablonu oluştur.
+
+Test Sonuçları:
+{TEST_RESULTS}
+
+Rapor Bölümleri:
+1. Giriş ve Amaç
+2. Metodoloji
+3. Bulgular ve Analiz
+4. Güvenlik Açıkları
+5. Öneriler
+6. Sonuç
+
+Her bölüm için:
+- Açıklayıcı başlık
+- İçerik şablonu
+- Veri entegrasyonu
+- Akademik referanslar
+
+Format: Markdown
+```
+
+## Prompt 4: Güvenlik Önerileri
+```
+Sen bir güvenlik danışmanısın. Aşağıdaki güvenlik bulgularına dayanarak detaylı öneriler sun.
+
+Bulgular:
+{SECURITY_FINDINGS}
+
+Her bulgu için:
+1. Risk seviyesi
+2. Etki analizi
+3. Çözüm önerisi
+4. Uygulama adımları
+5. Test kriterleri
+
+Öneri Formatı:
+- Acil (24 saat içinde)
+- Kısa vadeli (1 hafta içinde)
+- Orta vadeli (1 ay içinde)
+- Uzun vadeli (3 ay içinde)
+```
+
+## Prompt 5: Teknik Dokümantasyon
+```
+Sen bir teknik yazar olarak, güvenlik test sonuçlarını teknik dokümantasyona dönüştür.
+
+Test Verileri:
+{TEST_DATA}
+
+Dokümantasyon Bölümleri:
+1. Test Metodolojisi
+2. Güvenlik Başlıkları Açıklaması
+3. Test Sonuçları
+4. Güvenlik Açıkları
+5. Çözüm Önerileri
+6. Uygulama Rehberi
+
+Her bölüm için:
+- Teknik açıklamalar
+- Kod örnekleri
+- Konfigürasyon örnekleri
+- Test adımları
+```
+
+## Prompt 6: Risk Analizi
+```
+Sen bir risk analisti olarak, güvenlik test sonuçlarını risk perspektifinden değerlendir.
+
+Test Sonuçları:
+{RISK_DATA}
+
+Risk Analizi:
+1. Risk matrisi oluştur
+2. Risk seviyelerini belirle
+3. Risk azaltma stratejileri
+4. Risk monitoring planı
+5. Risk raporlama
+
+Risk Kategorileri:
+- Yüksek Risk
+- Orta Risk
+- Düşük Risk
+- Bilgi Riskleri
+```
+
+## Prompt 7: Compliance Kontrolü
+```
+Sen bir compliance uzmanısın. Güvenlik test sonuçlarını standartlara göre değerlendir.
+
+Test Sonuçları:
+{COMPLIANCE_DATA}
+
+Standartlar:
+- OWASP Top 10
+- NIST Cybersecurity Framework
+- ISO 27001
+- PCI DSS
+- GDPR
+
+Compliance Kontrolü:
+1. Standart uyumluluğu
+2. Eksiklikler
+3. İyileştirme önerileri
+4. Compliance raporu
+```
+
+## Prompt 8: Executive Summary
+```
+Sen bir yönetici danışmanısın. Güvenlik test sonuçlarını yönetici seviyesinde özetle.
+
+Test Sonuçları:
+{EXECUTIVE_DATA}
+
+Executive Summary:
+1. Özet bulgular
+2. Kritik riskler
+3. İş etkisi
+4. Yatırım önerileri
+5. Zaman çizelgesi
+6. ROI analizi
+
+Format: Yönetici raporu
+Dil: Türkçe
+Seviye: Yönetici
+```
+
+## Kullanım Talimatları
+
+### 1. JSON Verisi Hazırlama
+```python
+# Test sonuçlarını JSON formatında hazırla
+import json
+
+with open('data/raw_reports/all_headers_20231201_120000.json', 'r') as f:
+    test_data = json.load(f)
+
+# AI prompt'una veri ekle
+prompt = f"""
+Sen bir güvenlik uzmanısın. Aşağıdaki test sonuçlarını analiz et:
+
+{json.dumps(test_data, indent=2)}
+
+Görevler:
+1. Top 5 kritik bulguyu sırala
+2. Etki analizi yap
+3. Öneriler sun
+"""
+```
+
+### 2. AI Entegrasyonu
+```python
+# OpenAI API kullanımı
+import openai
+
+def analyze_security_headers(json_data, prompt_template):
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": "Sen bir güvenlik uzmanısın."},
+            {"role": "user", "content": prompt_template.format(JSON_DATA=json_data)}
+        ]
+    )
+    return response.choices[0].message.content
+```
+
+### 3. Sonuç İşleme
+```python
+# AI sonuçlarını işle
+def process_ai_results(ai_response):
+    # JSON parse et
+    result = json.loads(ai_response)
+    
+    # Rapor oluştur
+    with open('ai_analysis_report.json', 'w') as f:
+        json.dump(result, f, indent=2)
+    
+    return result
+```
+
+## Notlar
+
+- Tüm promptlar Türkçe olarak hazırlanmıştır
+- JSON formatında çıktı beklenir
+- Güvenlik odaklı analiz yapılır
+- Akademik standartlarda rapor üretilir
+- Yönetici seviyesinde özet sunulur
