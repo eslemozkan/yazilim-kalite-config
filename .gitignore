@@ -20,6 +20,8 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
 
 # Virtual Environment
 .venv/
@@ -27,26 +29,97 @@ venv/
 ENV/
 env/
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# IDE
+# IDE and Editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
 
 # Data and Reports
 data/raw_reports/
+data/processed/*.json
+data/processed/*.csv
+data/processed/*.xlsx
+data/processed/*.txt
 *.log
 errors_*.log
+logs/
 
-# OS
+# Security Headers Test Reports
+*_headers_*.json
+*_headers_*.csv
+comparison_table_*.xlsx
+summary_report_*.txt
+analysis_*.json
+
+# OS Files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+Desktop.ini
 
 # Docker
 .dockerignore
+docker-compose.override.yml
+.docker/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
 
 # Temporary files
 *.tmp
 *.temp
+*.bak
+*.backup
+*.orig
+
+# Windows
+*.lnk
+
+# macOS
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# Node.js (if using any JS tools)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Security and Sensitive Data
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+credentials/
+config/secrets.yml
