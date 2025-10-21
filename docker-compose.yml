@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   dvwa:
-    image: vulnerables/web-dvwa
+    image: citizenstig/nowasp
     container_name: dvwa
     ports:
       - "8081:80"
@@ -18,7 +16,7 @@ services:
       - security-test-network
 
   bwapp:
-    image: raesene/bwapp
+    image: tuxotron/bwapp
     container_name: bwapp
     ports:
       - "8082:80"
@@ -34,7 +32,7 @@ services:
       - security-test-network
 
   xvwa:
-    image: tuxotron/xvwa
+    image: citizenstig/xvwa
     container_name: xvwa
     ports:
       - "8083:80"
@@ -48,7 +46,7 @@ services:
       - security-test-network
 
   juice-shop:
-    image: bkimminich/juice-shop
+    image: owasp/juice-shop
     container_name: juice-shop
     ports:
       - "3000:3000"
@@ -59,7 +57,7 @@ services:
       - security-test-network
 
   opencart:
-    image: bitnami/opencart
+    image: opencart/opencart
     container_name: opencart
     ports:
       - "8084:8080"

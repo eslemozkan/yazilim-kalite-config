@@ -88,7 +88,12 @@ class ReportParser:
                 # Status sayımı
                 status = finding.get('status', 'fail')
                 analysis['status_counts'][status] += 1
-                target_summary[f'{status}ed_checks'] += 1
+                if status == 'warn':
+                    target_summary['warnings'] += 1
+                elif status == 'pass':
+                    target_summary['passed_checks'] += 1
+                else:  # fail
+                    target_summary['failed_checks'] += 1
                 
                 # Header istatistikleri
                 header_name = finding.get('name', 'Unknown')
