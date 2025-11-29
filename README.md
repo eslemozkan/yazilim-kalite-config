@@ -182,7 +182,12 @@ Proje çalıştırıldığında `data/processed/comparison_table_YYYYMMDD_HHMMSS
 
 #### Excel Raporu Ekran Görüntüsü
 
+> **Not**: Ekran görüntüsü `docs/screenshots/excel_comparison_table.png` olarak eklenecektir.
+
+<!-- 
+Ekran görüntüsü eklendiğinde bu satırı aktif edin:
 ![Excel Security Headers Comparison Report](docs/screenshots/excel_comparison_table.png)
+-->
 
 **Rapor Analizi:**
 - **6 Sütun**: Target, Header_Name, Value, Status, Severity, Remark
