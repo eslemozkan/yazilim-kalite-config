@@ -182,12 +182,7 @@ Proje çalıştırıldığında `data/processed/comparison_table_YYYYMMDD_HHMMSS
 
 #### Excel Raporu Ekran Görüntüsü
 
-> **Not**: Ekran görüntüsü `docs/screenshots/excel_comparison_table.png` olarak eklenecektir.
-
-<!-- 
-Ekran görüntüsü eklendiğinde bu satırı aktif edin:
-![Excel Security Headers Comparison Report](docs/screenshots/excel_comparison_table.png)
--->
+[📊 Excel Raporu Görüntüsünü Görüntüle](docs/screenshots/Screenshot_1.png)
 
 **Rapor Analizi:**
 - **6 Sütun**: Target, Header_Name, Value, Status, Severity, Remark
@@ -198,60 +193,7 @@ Ekran görüntüsü eklendiğinde bu satırı aktif edin:
 - **Hedef Uygulamalar**: bwapp, dvwa, juice-shop, opencart, xvwa
 - **Test Edilen Başlıklar**: HSTS, CSP, X-Content-Type-Options, X-Frame-Options, Server_Info_Leak, Referrer-Policy
 
-#### Örnek Excel Raporu Görünümü
 
-```
-┌──────────┬──────────────────────┬──────────────────────────────┬────────┬──────────┬────────────────────────────┐
-│ Target   │ Header_Name          │ Value                        │ Status │ Severity │ Remark                     │
-├──────────┼──────────────────────┼──────────────────────────────┼────────┼──────────┼────────────────────────────┤
-│ dvwa     │ HSTS                 │ Missing                      │ FAIL   │ High     │ HSTS header is missing...   │
-│ dvwa     │ CSP                  │ Missing                      │ FAIL   │ High     │ Content Security Policy... │
-│ dvwa     │ X-Content-Type-Opts  │ Missing                      │ FAIL   │ Medium   │ X-Content-Type-Options...   │
-│ juice-sh │ HSTS                 │ Missing                      │ FAIL   │ High     │ HSTS header is missing...   │
-│ juice-sh │ X-Content-Type-Opts  │ nosniff                      │ PASS   │ Low      │ X-Content-Type-Options...   │
-└──────────┴──────────────────────┴──────────────────────────────┴────────┴──────────┴────────────────────────────┘
-```
-
-#### Excel Raporu Doğrulama ve Analiz
-
-✅ **Rapor Doğru Çalışıyor - Test Edildi ve Onaylandı:**
-
-**Fonksiyonel Testler:**
-- ✅ Tüm hedefler test edilmiş (5 hedef uygulama: bwapp, dvwa, juice-shop, opencart, xvwa)
-- ✅ Connection error'lar doğru tespit edilmiş ve "High" severity ile işaretlenmiş
-- ✅ Gerçek güvenlik bulguları doğru kategorize edilmiş (High/Medium/Low)
-- ✅ Status değerleri doğru (Pass/Warn/Fail)
-- ✅ Renk kodlaması çalışıyor (Kırmızı/Sarı/Yeşil)
-- ✅ Filtreleme özelliği aktif (AutoFilter)
-- ✅ Özet sayfası mevcut ve çalışıyor
-
-**Güvenlik Bulguları Analizi:**
-
-**DVWA (Bağlantı Başarılı - Gerçek Test):**
-- ❌ HSTS eksik (High) - Protocol downgrade saldırılarına açık
-- ❌ CSP eksik (High) - XSS saldırılarına açık
-- ❌ X-Content-Type-Options eksik (Medium) - MIME sniffing saldırılarına açık
-- ❌ X-Frame-Options eksik (Medium) - Clickjacking saldırılarına açık
-- ⚠️ Server Info Leak (Low) - Apache/2.4.25 (Debian) versiyon bilgisi
-- ⚠️ Referrer-Policy eksik (Low) - Referrer bilgisi sızıntısı
-
-**Juice Shop (Bağlantı Başarılı - Gerçek Test):**
-- ❌ HSTS eksik (High) - Protocol downgrade saldırılarına açık
-- ❌ CSP eksik (High) - XSS saldırılarına açık
-- ✅ X-Content-Type-Options mevcut (Pass) - "nosniff" doğru yapılandırılmış
-- ✅ X-Frame-Options mevcut (Pass) - "SAMEORIGIN" clickjacking koruması aktif
-- ⚠️ Referrer-Policy eksik (Low) - Referrer bilgisi sızıntısı
-
-**Connection Errors (Containerlar Çalışmadığında):**
-- ✅ Hata yakalama mekanizması çalışıyor
-- ✅ "Unable to connect to target" mesajı doğru
-- ✅ High severity ile işaretlenmiş (doğru)
-
-**Rapor Kalitesi:**
-- 📊 Toplam 32 bulgu tespit edilmiş
-- 📈 Severity dağılımı: High (56.2%), Medium (12.5%), Low (31.2%)
-- 📉 Status dağılımı: Pass (12.5%), Warn (18.8%), Fail (68.8%)
-- ✅ Tüm bulgular detaylı açıklamalarla (Remark sütunu)
 
 ### JSON Ham Raporları
 
@@ -290,19 +232,6 @@ Target,Header_Name,Value,Status,Severity,Remark
 dvwa,HSTS,Missing,fail,High,HSTS header is missing - allows protocol downgrade attacks
 dvwa,CSP,Missing,fail,High,Content Security Policy is missing
 ```
-
-### Ekran Görüntüleri
-
-> **Not**: Excel raporu ve test sonuçlarının ekran görüntüleri `docs/screenshots/` klasöründe saklanır. Ekran görüntüsü alma talimatları için `docs/setup_ss_instructions.md` dosyasına bakın.
-
-**Önerilen Ekran Görüntüleri:**
-1. ✅ **Excel karşılaştırma tablosu** (`excel_comparison_table.png`) - Security Headers Comparison sayfası
-2. Excel özet sayfası (`excel_summary_page.png`) - Summary sayfası
-3. Terminal çıktısı (`terminal_output.png`) - Test çalıştırma sonuçları
-4. Docker container durumu (`docker_containers.png`) - `docker compose ps` çıktısı
-
-**Ekran Görüntüsü Ekleme:**
-Ekran görüntüsünü `docs/screenshots/excel_comparison_table.png` olarak kaydedin. README otomatik olarak bu görüntüyü gösterecektir.
 
 ### Çıktı Dosyaları Yapısı
 
